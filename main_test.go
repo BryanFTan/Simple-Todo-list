@@ -43,7 +43,7 @@ func ensureTableExists() {
 
 func clearTable() {
 	a.DB.Exec("DELETE FROM listItems")
-	a.DB.Exec("ALTER SQEUNCE listItems_id_seq RESTART WITH 1")
+	a.DB.Exec("ALTER SEQUENCE listItems_id_seq RESTART WITH 1")
 }
 
 func TestEmptyTable(t *testing.T) {
@@ -136,7 +136,7 @@ func TestUpdateListItem(t *testing.T) {
 	addListItems(1)
 
 	//get item first
-	req, _ := http.NewRequest("GET", "/product/1", nil)
+	req, _ := http.NewRequest("GET", "/listItem/1", nil)
 	response := executeRequest(req)
 	var oriListItem map[string]interface{}
 	json.Unmarshal(response.Body.Bytes(), &oriListItem)
@@ -174,7 +174,7 @@ func TestDeleteListItem(t *testing.T) {
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 
-	req, _ = http.NewRequest("DELETE", "listItem/1", nil)
+	req, _ = http.NewRequest("DELETE", "/listItem/1", nil)
 	response = executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 
